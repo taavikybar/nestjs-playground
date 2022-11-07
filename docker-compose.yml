@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6.0.1
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+    # networks:
+    #   - nestjs-network
+  nats:
+    image: nats:latest
+    # networks:
+    #   - nestjs-network
+    ports:
+      - 8222:8222
+      - 6222:6222
+      - 4222:4222
+  # api:
+  #   build:
+  #     dockerfile: Dockerfile
+  #     context: .
+  #   volumes:
+  #     - .:/usr/src/app
+  #   env_file:
+  #     - .env
+  #   command: npm run start:dev
+  #   ports:
+  #     - 3000:3000
+  #   networks:
+  #     - nestjs-network
+  #   depends_on:
+  #     - mongodb
+
+volumes:
+  mongodb_data_container:
+# networks:
+#   nestjs-network:
+#     driver: bridge
