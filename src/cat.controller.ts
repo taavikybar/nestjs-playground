@@ -56,8 +56,9 @@ export class CatController {
 
   /* NATS event based */
   @EventPattern('cat-created')
-  handleCatCreated(@Payload() cat: Cat) {
-    return this.catService.create(cat);
+  async handleCatCreated(@Payload() cat: Cat) {
+    const newCat = await this.catService.create(cat);
+    console.log('cat-created event', newCat);
   }
 
   /* HTTP */
@@ -77,18 +78,25 @@ export class CatController {
     });
   }
 
-  @MessagePattern('responses')
-  responses(data: string) {
-    console.log('responses', data);
-    return 'hello';
+  @Post('/event')
+  async createCatEvent(@Res() response, @Body() cat: Cat) {
+    // proxying message to via nats to eventhandler
+    this.client.emit('cat-created', cat);
+
+    return response.status(HttpStatus.CREATED).json({
+      catCreated: true,
+    });
   }
 
   @Get()
   async findAllHttp(@Res() response) {
+    // proxying message to via nats to messagehandler
     const msg = this.client.send({ cmd: 'get-all' }, '');
     const cats = await firstValueFrom(msg);
 
+    // using service
     // const cats = await this.catService.findAll();
+
     return response.status(HttpStatus.OK).json({
       cats,
     });

@@ -9,7 +9,7 @@ import { Cat, CatSchema } from './cat.schema';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SERVICE_NAME } from './config';
 
-const dbURI = 'mongodb://root:rootpassword@localhost:27017/admin';
+const dbURI = 'mongodb://localhost:27017/admin';
 
 const NatsClientProvider: Provider = {
   inject: [ConfigService],

@@ -19,7 +19,7 @@ import { connect, StringCodec } from 'nats';
   };
 
   // await req('get-by-id', '63679d37e4d684a6571f6a9c');
-  // await req('get-all');
+  await req('get-all');
   // await req('delete', '63678fc18b695f61263c1abe');
   // await req('update', {
   //   id: '63679d37e4d684a6571f6a9c',
@@ -34,30 +34,16 @@ import { connect, StringCodec } from 'nats';
   //   breed: 'wild',
   // });
 
-  // const msg = await nc.request(
-  //   'cat-created',
-  //   sc.encode(
-  //     JSON.stringify({
-  //       data: {
-  //         name: 'new',
-  //         age: 3,
-  //         breed: 'some',
-  //       },
-  //       id: 'event',
-  //     }),
-  //   ),
-  // );
+  /* create a subscriber */
+  // const sub = nc.subscribe('responses');
+  // (async () => {
+  //   for await (const m of sub) {
+  //     console.log(`[${sub.getProcessed()}]: ${sc.decode(m.data)}`);
+  //   }
+  //   console.log('subscription closed');
+  // })();
 
-  // console.log(sc.decode(msg.data));
-
-  const sub = nc.subscribe('responses');
-  (async () => {
-    for await (const m of sub) {
-      console.log(`[${sub.getProcessed()}]: ${sc.decode(m.data)}`);
-    }
-    console.log('subscription closed');
-  })();
-
+  /* publish messages */
   // nc.publish('responses', sc.encode('world'));
   // nc.publish('responses', sc.encode('again'));
 

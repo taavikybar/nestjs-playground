@@ -1,6 +1,6 @@
 ## Description
 
-[Nest](https://github.com/nestjs/nest) + [MongoDB](https://www.mongodb.com/) + [Nats](https://nats.io/) playground 
+[Nest.js](https://github.com/nestjs/nest) + [MongoDB](https://www.mongodb.com/) + [Nats](https://nats.io/) playground using [nats.io](https://github.com/nats-io/nats.js)
 
 ## Installation
 
@@ -22,4 +22,7 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+
+# to run run.ts
+npx ts-node run.ts
 ```
