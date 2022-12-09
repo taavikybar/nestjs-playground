@@ -80,7 +80,7 @@ export class CatController {
 
   @Post('/event')
   async createCatEvent(@Res() response, @Body() cat: Cat) {
-    // proxying message to via nats to eventhandler
+    // proxying message via nats to eventhandler
     this.client.emit('cat-created', cat);
 
     return response.status(HttpStatus.CREATED).json({
@@ -90,7 +90,7 @@ export class CatController {
 
   @Get()
   async findAllHttp(@Res() response) {
-    // proxying message to via nats to messagehandler
+    // proxying message via nats to messagehandler
     const msg = this.client.send({ cmd: 'get-all' }, '');
     const cats = await firstValueFrom(msg);
 
